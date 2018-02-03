@@ -404,9 +404,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
           
-            <a href="/tags/字符串算法/" rel="tag"># 字符串算法</a>
+            <a href="/tags/字符串算法/" rel="tag"><i class="fa fa-tag"></i> 字符串算法</a>
           
         </div>
       
@@ -461,6 +461,11 @@
           
 
   
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzgzNS8xMDM4OA=="></div>
+    </div>
+
+  
 
 
 
@@ -502,7 +507,7 @@
                 alt="chen" />
             
               <p class="site-author-name" itemprop="name">chen</p>
-              <p class="site-description motion-element" itemprop="description">I Want To Know Is Where I'm Going To Die, So I'll Never Go There.</p>
+              <p class="site-description motion-element" itemprop="description">我希望自己也是一颗星星：如果我会发光，就不必害怕黑暗。如果我自己是那么美好，那么一切恐惧就可以烟消云散。</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -630,6 +635,12 @@
     
 
     
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
 
   </div>
 
@@ -746,6 +757,17 @@
 
 
   
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
 
 
 
@@ -771,6 +793,31 @@
   
 
   
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
   
 
   
