@@ -917,13 +917,13 @@
   
   <script type="text/javascript">
     var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
+    var guest = 'nick,mail';
     guest = guest.split(',').filter(item=>{
       return GUEST.indexOf(item)>-1;
     });
     new Valine({
         el: '#comments' ,
-        verify: true,
+        verify: false,
         notify: false,
         appId: 'ytSFk57eYvBl3HYWz54Qrgng-gzGzoHsz',
         appKey: 'Nszr1s7s7hEQhve4SM5nLiFQ',
