@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="Stay Foolish">
 <meta property="og:description" content="KMP算法及其扩展参考阮一峰-字符串匹配的KMP算法 从头到尾彻底理解KMP 简介KMP算法是用来解决两个字符串的匹配问题的。 简单说,有字符串A和字符串B，判断字符串A中是否包含字符串B。如果包含，返回B在A中的位置；如果不包含，返回-1。 常规思路是从A的第一个字符开始和B的第一个字符匹配，如果中间有不匹配的地方，B回到0位置，A到下一个位置，重新匹配，直到匹配完成或者A到达尽头为止。代码如下">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-03T06:31:14.313Z">
+<meta property="og:updated_time" content="2018-02-05T05:49:35.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KMP算法及扩展">
 <meta name="twitter:description" content="KMP算法及其扩展参考阮一峰-字符串匹配的KMP算法 从头到尾彻底理解KMP 简介KMP算法是用来解决两个字符串的匹配问题的。 简单说,有字符串A和字符串B，判断字符串A中是否包含字符串B。如果包含，返回B在A中的位置；如果不包含，返回-1。 常规思路是从A的第一个字符开始和B的第一个字符匹配，如果中间有不匹配的地方，B回到0位置，A到下一个位置，重新匹配，直到匹配完成或者A到达尽头为止。代码如下">
@@ -359,6 +359,7 @@
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>KMP算法是用来解决两个字符串的匹配问题的。</p>
 <p>简单说,有字符串A和字符串B，判断字符串A中是否包含字符串B。如果包含，返回B在A中的位置；如果不包含，返回-1。</p>
 <p>常规思路是从A的第一个字符开始和B的第一个字符匹配，如果中间有不匹配的地方，B回到0位置，A到下一个位置，重新匹配，直到匹配完成或者A到达尽头为止。代码如下：</p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getIndexOf</span><span class="params">(String A, String B)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (A == <span class="keyword">null</span> || B == <span class="keyword">null</span> || B.length() &lt; <span class="number">1</span>  || A.length() &lt; B.length() ) &#123;</span><br><span class="line">  	<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">char</span>[] charsA = A.toCharArray();</span><br><span class="line">  <span class="keyword">char</span>[] charsB = B.toCharArray();</span><br><span class="line">  <span class="keyword">int</span> pA = <span class="number">0</span>, pB = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> (pA &lt; charsA.length &amp;&amp; pB &lt; charsB.length) &#123;</span><br><span class="line">    <span class="keyword">if</span> (charsA[pA] == charsB[pB]) &#123;</span><br><span class="line">      pA++;</span><br><span class="line">      pB++;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      pA = pA - PB + <span class="number">1</span>;</span><br><span class="line">      pB = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (pB == charsB.length) &#123;</span><br><span class="line">    <span class="keyword">return</span> pA - pB;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>显然，在最坏情况下，时间复杂度为O（A * B ）。</p>
 <p>而<a href="http://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm" target="_blank" rel="noopener">Knuth-Morris-Pratt算法</a>（KMP算法）可以把复杂度降到O（A+B），给三位大神跪了。</p>
@@ -425,21 +426,6 @@
 
       
       
-        <div class="post-widgets">
-        
-
-        
-
-        
-          
-          <div id="needsharebutton-postbottom">
-            <span class="btn">
-              <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </span>
-          </div>
-        
-        </div>
-      
       
 
       
@@ -476,6 +462,32 @@
 
 
     <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
       
     </div>
   </div>
@@ -542,7 +554,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -564,7 +576,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -838,31 +850,6 @@
 
 
   
-  
-  
-  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
-
-  
-  
-  <script src="/lib/needsharebutton/needsharebutton.js"></script>
-
-  <script>
-    
-      pbOptions = {};
-      
-          pbOptions.iconStyle = "box";
-      
-          pbOptions.boxForm = "horizontal";
-      
-          pbOptions.position = "right";
-      
-          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
-      
-      new needShareButton('#needsharebutton-postbottom', pbOptions);
-    
-    
-  </script>
-
   
 
   

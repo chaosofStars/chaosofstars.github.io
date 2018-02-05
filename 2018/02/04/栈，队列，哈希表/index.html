@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="Stay Foolish">
 <meta property="og:description" content="栈，队列，哈希表栈，队列概念 栈是一种先进后出的数据结构，类似于子弹上膛。 队列是一种先进先出的数据结构，类似于排队。  题目1： 用数组结构实现大小固定的队列和栈  code">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-04T15:13:39.167Z">
+<meta property="og:updated_time" content="2018-02-05T05:48:24.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="栈，队列，哈希表">
 <meta name="twitter:description" content="栈，队列，哈希表栈，队列概念 栈是一种先进后出的数据结构，类似于子弹上膛。 队列是一种先进先出的数据结构，类似于排队。  题目1： 用数组结构实现大小固定的队列和栈  code">
@@ -379,7 +379,7 @@
 <p>实现一种狗猫队列的结构，要求如下：<br>用户可以调用add方法将cat类或dog类的实例放入队列中；<br>用户可以调用pollAll方法，将队列中所有的实例按照进队列的先后顺序依次弹出；<br>用户可以调用pollDog方法，将队列中dog类的实例按照进队列的先后顺序依次弹出；<br>用户可以调用pollCat方法，将队列中cat类的实例按照进队列的先后顺序依次弹出；<br>用户可以调用isEmpty方法，检查队列中是否还有dog或cat的实例；<br>用户可以调用isDogEmpty方法，检查队列中是否有dog类的实例；<br>用户可以调用isCatEmpty方法，检查队列中是否有cat类的实例。</p>
 </blockquote>
 <h4 id="code-3"><a href="#code-3" class="headerlink" title="code"></a>code</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 重点在add方法和pollAll方法</span></span><br><span class="line"><span class="comment"> * 因为需要统计，原有数据结构没有，再构造一个新的类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PetQueue</span> </span>&#123;</span><br><span class="line">    Pet pet;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PetQueue</span><span class="params">(Pet pet, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.pet = pet;</span><br><span class="line">        <span class="keyword">this</span>.count = count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> pet.getPetType();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Pet <span class="title">getPet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> pet;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CatAndDogQueue</span> </span>&#123;</span><br><span class="line">    Queue&lt;PetQueue&gt; catQueue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    Queue&lt;PetQueue&gt; dogQueue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Pet pet)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (pet.getPetType().equals(<span class="string">"dog"</span>)) &#123;</span><br><span class="line">            dogQueue.add(<span class="keyword">new</span> PetQueue(pet, count++));</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pet.getPetType().equals(<span class="string">"cat"</span>)) &#123;</span><br><span class="line">            catQueue.add(<span class="keyword">new</span> PetQueue(pet, count++));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Pet <span class="title">pollAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (dogQueue.peek().count &lt;= catQueue.peek().count) &#123;</span><br><span class="line">            <span class="keyword">return</span> dogQueue.poll().getPet();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (dogQueue.peek().count &gt; catQueue.peek().count) &#123;</span><br><span class="line">            <span class="keyword">return</span> catQueue.poll().getPet();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundsException(<span class="string">"Queue is empty"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><h2 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h2><ol>
+<h2 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><ol>
 <li>哈希表的输出域无限，输入域有限。</li>
 <li>数据量足够大时，结果在输入范围内均匀分布。</li>
 <li>碰撞的解决</li>
@@ -421,21 +421,6 @@
 
       
       
-        <div class="post-widgets">
-        
-
-        
-
-        
-          
-          <div id="needsharebutton-postbottom">
-            <span class="btn">
-              <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </span>
-          </div>
-        
-        </div>
-      
       
 
       
@@ -451,6 +436,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/06/矩阵问题/" rel="prev" title="矩阵问题">
+                矩阵问题 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -468,6 +457,32 @@
 
 
     <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
       
     </div>
   </div>
@@ -534,7 +549,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -556,7 +571,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -589,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#栈，队列，哈希表"><span class="nav-number">1.</span> <span class="nav-text">栈，队列，哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈，队列"><span class="nav-number">1.1.</span> <span class="nav-text">栈，队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">1.1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目1："><span class="nav-number">1.1.2.</span> <span class="nav-text">题目1：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目2："><span class="nav-number">1.1.3.</span> <span class="nav-text">题目2：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-1"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目3："><span class="nav-number">1.1.4.</span> <span class="nav-text">题目3：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-2"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目4：猫狗队列"><span class="nav-number">1.1.5.</span> <span class="nav-text">题目4：猫狗队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-3"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">code</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希表"><span class="nav-number">1.2.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念-1"><span class="nav-number">1.3.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.3.1.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目1：-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">题目1：</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#栈，队列，哈希表"><span class="nav-number">1.</span> <span class="nav-text">栈，队列，哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈，队列"><span class="nav-number">1.1.</span> <span class="nav-text">栈，队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">1.1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目1："><span class="nav-number">1.1.2.</span> <span class="nav-text">题目1：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目2："><span class="nav-number">1.1.3.</span> <span class="nav-text">题目2：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-1"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目3："><span class="nav-number">1.1.4.</span> <span class="nav-text">题目3：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-2"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目4：猫狗队列"><span class="nav-number">1.1.5.</span> <span class="nav-text">题目4：猫狗队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#code-3"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">code</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希表"><span class="nav-number">1.2.</span> <span class="nav-text">哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.2.2.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目1：-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">题目1：</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -830,31 +845,6 @@
 
 
   
-  
-  
-  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
-
-  
-  
-  <script src="/lib/needsharebutton/needsharebutton.js"></script>
-
-  <script>
-    
-      pbOptions = {};
-      
-          pbOptions.iconStyle = "box";
-      
-          pbOptions.boxForm = "horizontal";
-      
-          pbOptions.position = "right";
-      
-          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
-      
-      new needShareButton('#needsharebutton-postbottom', pbOptions);
-    
-    
-  </script>
-
   
 
   
