@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法,程序人生,优先队列,哈夫曼编码,二叉树,并查集," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="优先队列（贪心算法）概念PriorityQueue（优先队列）在Java 中底层实现用的是小根堆，所以在具体问题上需要自己构建比较器来实现不同的优先队列。 题目1: 随时找到数据流的中位数【题目】有一个源源不断地吐出整数的数据流，假设你有足够的空间来保存吐出的数。请设计一个名叫MedianHolder的结构，MedianHolder可以随时取得之前吐出所有数的中位数。【要求】1．如果MedianH">
+<meta name="keywords" content="算法,程序人生,优先队列,哈夫曼编码,二叉树,并查集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="优先队列，哈夫曼树，二叉树，并查集">
+<meta property="og:url" content="http://yoursite.com/2018/02/07/贪心算法，哈夫曼树，二叉树，并查集/index.html">
+<meta property="og:site_name" content="Stay Foolish">
+<meta property="og:description" content="优先队列（贪心算法）概念PriorityQueue（优先队列）在Java 中底层实现用的是小根堆，所以在具体问题上需要自己构建比较器来实现不同的优先队列。 题目1: 随时找到数据流的中位数【题目】有一个源源不断地吐出整数的数据流，假设你有足够的空间来保存吐出的数。请设计一个名叫MedianHolder的结构，MedianHolder可以随时取得之前吐出所有数的中位数。【要求】1．如果MedianH">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-07T14:58:10.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="优先队列，哈夫曼树，二叉树，并查集">
+<meta name="twitter:description" content="优先队列（贪心算法）概念PriorityQueue（优先队列）在Java 中底层实现用的是小根堆，所以在具体问题上需要自己构建比较器来实现不同的优先队列。 题目1: 随时找到数据流的中位数【题目】有一个源源不断地吐出整数的数据流，假设你有足够的空间来保存吐出的数。请设计一个名叫MedianHolder的结构，MedianHolder可以随时取得之前吐出所有数的中位数。【要求】1．如果MedianH">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":null,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/07/贪心算法，哈夫曼树，二叉树，并查集/"/>
+
+
+
+
+
+  <title>优先队列，哈夫曼树，二叉树，并查集 | Stay Foolish</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stay Foolish</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Java learner</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/07/贪心算法，哈夫曼树，二叉树，并查集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stay Foolish">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">优先队列，哈夫曼树，二叉树，并查集</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-07T20:57:50+08:00">
+                2018-02-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/07/贪心算法，哈夫曼树，二叉树，并查集/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/02/07/贪心算法，哈夫曼树，二叉树，并查集/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="优先队列（贪心算法）"><a href="#优先队列（贪心算法）" class="headerlink" title="优先队列（贪心算法）"></a>优先队列（贪心算法）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>PriorityQueue（优先队列）在Java 中底层实现用的是小根堆，所以在具体问题上需要自己构建比较器来实现不同的优先队列。</p>
+<h2 id="题目1"><a href="#题目1" class="headerlink" title="题目1:"></a>题目1:</h2><blockquote>
+<p>随时找到数据流的中位数<br>【题目】<br>有一个源源不断地吐出整数的数据流，假设你有足够的空间来<br>保存吐出的数。请设计一个名叫MedianHolder的结构，<br>MedianHolder可以随时取得之前吐出所有数的中位数。<br>【要求】<br>1．如果MedianHolder已经保存了吐出的N个数，那么任意时刻<br>将一个新数加入到MedianHolder的过程，其时间复杂度是<br>O(logN)。<br>2．取得已经吐出的N个数整体的中位数的过程，时间复杂度为<br>O(1)。</p>
+</blockquote>
+<h3 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h3><p>构建一个大根堆和一个小根堆，维持平衡，根据Size大小，弹出大根堆或小根堆堆顶。</p>
+<h3 id="code"><a href="#code" class="headerlink" title="code:"></a>code:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Question1</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MedianHolder</span> </span>&#123;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; maxpq = <span class="keyword">new</span> PriorityQueue&lt;&gt;((o1, o2) -&gt; (o2 - o1));</span><br><span class="line">        PriorityQueue&lt;Integer&gt; minpq = <span class="keyword">new</span> PriorityQueue&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">modifyTwoHeap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (maxpq.size() == minpq.size() + <span class="number">2</span>) &#123;</span><br><span class="line">                minpq.add(maxpq.poll());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (maxpq.size() + <span class="number">2</span> == minpq.size()) &#123;</span><br><span class="line">                maxpq.add(minpq.poll());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addNumber</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (maxpq.isEmpty()) &#123;</span><br><span class="line">                maxpq.add(i);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (i &lt;= maxpq.peek()) &#123;</span><br><span class="line">                maxpq.add(i);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                minpq.add(i);</span><br><span class="line">            &#125;</span><br><span class="line">            modifyTwoHeap();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Integer <span class="title">getMedian</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (minpq.isEmpty() &amp;&amp; maxpq.isEmpty()) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> minSize = minpq.size();</span><br><span class="line">            <span class="keyword">int</span> maxSize = maxpq.size();</span><br><span class="line">            Integer maxHeap = maxpq.peek();</span><br><span class="line">            Integer minHeap = minpq.peek();</span><br><span class="line">            <span class="keyword">return</span> minSize != maxSize ? (maxSize &gt; minSize ? maxHeap : minHeap) : (maxHeap + minHeap) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// for test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] getRandomArray(<span class="keyword">int</span> maxLen, <span class="keyword">int</span> maxValue) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[(<span class="keyword">int</span>) (Math.random() * maxLen) + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != res.length; i++) &#123;</span><br><span class="line">            res[i] = (<span class="keyword">int</span>) (Math.random() * maxValue);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// for test, this method is ineffective but absolutely right</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getMedianOfArray</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] newArr = Arrays.copyOf(arr, arr.length);</span><br><span class="line">        Arrays.sort(newArr);</span><br><span class="line">        <span class="keyword">int</span> mid = (newArr.length - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> ((newArr.length &amp; <span class="number">1</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> (newArr[mid] + newArr[mid + <span class="number">1</span>]) / <span class="number">2</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> newArr[mid];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printArray</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != arr.length; i++) &#123;</span><br><span class="line">            System.out.print(arr[i] + <span class="string">" "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//for test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> err = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> testTimes = <span class="number">200000</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i != testTimes; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> len = <span class="number">30</span>;</span><br><span class="line">            <span class="keyword">int</span> maxValue = <span class="number">1000</span>;</span><br><span class="line">            <span class="keyword">int</span>[] arr = getRandomArray(len, maxValue);</span><br><span class="line">            MedianHolder medianHold = <span class="keyword">new</span> MedianHolder();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j != arr.length; j++) &#123;</span><br><span class="line">                medianHold.addNumber(arr[j]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (medianHold.getMedian() != getMedianOfArray(arr)) &#123;</span><br><span class="line">                err = <span class="keyword">true</span>;</span><br><span class="line">                printArray(arr);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(err ? <span class="string">"Oops..what a fuck!"</span> : <span class="string">"today is a beautiful day^_^"</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="哈夫曼树："><a href="#哈夫曼树：" class="headerlink" title="哈夫曼树："></a>哈夫曼树：</h1><h2 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h2><p><a href="https://zh.wikipedia.org/wiki/霍夫曼编码" target="_blank" rel="noopener">哈夫曼编码</a></p>
+<h2 id="题目2："><a href="#题目2：" class="headerlink" title="题目2："></a>题目2：</h2><blockquote>
+<p>一块金条切成两半，是需要花费和长度数值一样的铜板的。比如长度为20的<br>金条，不管切成长度多大的两半，都要花费20个铜板。一群人想整分整块金<br>条，怎么分最省铜板？<br>例如,给定数组{10,20,30}，代表一共三个人，整块金条长度为10+20+30=60.<br>金条要分成10,20,30三个部分。<br>如果，<br>先把长度60的金条分成10和50，花费60<br>再把长度50的金条分成20和30，花费50<br>一共花费110铜板。<br>但是如果，<br>先把长度60的金条分成30和30，花费60<br>再把长度30金条分成10和20，花费30<br>一共花费90铜板。<br>输入一个数组，返回分割的最小代价。</p>
+</blockquote>
+<h3 id="code-1"><a href="#code-1" class="headerlink" title="code:"></a>code:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Question2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">lessMoney</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            pq.add(arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>, cur = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (pq.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            cur = pq.poll() + pq.poll();</span><br><span class="line">            pq.add(cur);</span><br><span class="line">            res += cur;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// solution</span></span><br><span class="line">        <span class="keyword">int</span>[] arr = &#123; <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span> &#125;;</span><br><span class="line">        System.out.println(lessMoney(arr));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] arrForHeap = &#123; <span class="number">3</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">4</span> &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// min heap</span></span><br><span class="line">        PriorityQueue&lt;Integer&gt; minQ1 = <span class="keyword">new</span> PriorityQueue&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arrForHeap.length; i++) &#123;</span><br><span class="line">            minQ1.add(arrForHeap[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!minQ1.isEmpty()) &#123;</span><br><span class="line">            System.out.print(minQ1.poll() + <span class="string">" "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// min heap use Comparator</span></span><br><span class="line">        PriorityQueue&lt;Integer&gt; minQ2 = <span class="keyword">new</span> PriorityQueue&lt;&gt;((o1, o2) -&gt; (o1 - o2));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arrForHeap.length; i++) &#123;</span><br><span class="line">            minQ2.add(arrForHeap[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!minQ2.isEmpty()) &#123;</span><br><span class="line">            System.out.print(minQ2.poll() + <span class="string">" "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// max heap use Comparator</span></span><br><span class="line">        PriorityQueue&lt;Integer&gt; maxQ = <span class="keyword">new</span> PriorityQueue&lt;&gt;((o1, o2) -&gt; (o2 - o1));;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arrForHeap.length; i++) &#123;</span><br><span class="line">            maxQ.add(arrForHeap[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!maxQ.isEmpty()) &#123;</span><br><span class="line">            System.out.print(maxQ.poll() + <span class="string">" "</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题目3："><a href="#题目3：" class="headerlink" title="题目3："></a>题目3：</h2><blockquote>
+<p>输入：<br>参数1，正数数组costs<br>参数2，正数数组profits<br>参数3，正数k<br>参数4，正数m<br>costs[i]表示i号项目的花费<br>profits[i]表示i号项目在扣除花费之后还能挣到的钱(利润)<br>k表示你不能并行、只能串行的最多做k个项目<br>m表示你初始的资金<br>说明：你每做完一个项目，马上获得的收益，可以支持你去做下一个<br>项目。<br>输出：<br>你最后获得的最大钱数。</p>
+</blockquote>
+<h3 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h3><p>根据初始金额解锁不同的cost，加入优先队列，选出其中利润最高的。</p>
+<p>关键在于构建Node类。</p>
+<h3 id="code-2"><a href="#code-2" class="headerlink" title="code:"></a>code:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Question3</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> p;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> c;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.p = p;</span><br><span class="line">            <span class="keyword">this</span>.c = c;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">findMaximizedCapital</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> W, <span class="keyword">int</span>[] Profits, <span class="keyword">int</span>[] Capital)</span> </span>&#123;</span><br><span class="line">        Node[] nodes = <span class="keyword">new</span> Node[Profits.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; Profits.length; i++) &#123;</span><br><span class="line">            nodes[i] = <span class="keyword">new</span> Node(Profits[i], Capital[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        PriorityQueue&lt;Node&gt; minCost = <span class="keyword">new</span> PriorityQueue&lt;&gt;((Node node1, Node node2)-&gt;(node1.c - node2.c));</span><br><span class="line">        PriorityQueue&lt;Node&gt; maxProfits = <span class="keyword">new</span> PriorityQueue&lt;&gt;((Node node1, Node node2) -&gt; (node2.p - node1.p));</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nodes.length; i++) &#123;</span><br><span class="line">            minCost.add(nodes[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (!minCost.isEmpty() &amp;&amp; minCost.peek().c &lt;= W) &#123;</span><br><span class="line">                maxProfits.add(minCost.poll());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (minCost.isEmpty()) &#123;</span><br><span class="line">                <span class="keyword">return</span> W;</span><br><span class="line">            &#125;</span><br><span class="line">            W += maxProfits.poll().p;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> W;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h1><h2 id="题目4："><a href="#题目4：" class="headerlink" title="题目4："></a>题目4：</h2><blockquote>
+<p>折纸问题<br>【题目】<br>请把一段纸条竖着放在桌子上，然后从纸条的下边向上方对折1次，压出折痕后展开。此时<br>折痕是凹下去的，即折痕突起的方向指向纸条的背面。如果从纸条的下边向上方连续对折2<br>次，压出折痕后展开，此时有三条折痕，从上到下依次是下折痕、下折痕和上折痕。给定一<br>个输入参数N，代表纸条都从下边向上方连续对折N次，请从上到下打印所有折痕的方向。<br>例如：N=1时，打印：<br>down<br>N=2时，打印：<br>down<br>down<br>up</p>
+</blockquote>
+<h3 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h3><p>实质是一个n层的二叉树，父节点和左子树向下，右子树向上。</p>
+<p>顺序为中序遍历。</p>
+<h3 id="code-3"><a href="#code-3" class="headerlink" title="code:"></a>code:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Question4</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> N = <span class="number">4</span>;</span><br><span class="line">        printAllFolds(N);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printAllFolds</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">        printProcess(<span class="number">1</span>, N, <span class="keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printProcess</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> n, <span class="keyword">boolean</span> foldDown)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt; n) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        printProcess(i + <span class="number">1</span>, n, <span class="keyword">true</span>);</span><br><span class="line">        System.out.print(foldDown ? <span class="string">"Down "</span> : <span class="string">"Up "</span>);</span><br><span class="line">        printProcess((i + <span class="number">1</span>), n, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题目5："><a href="#题目5：" class="headerlink" title="题目5："></a>题目5：</h2><blockquote>
+<p>二叉树先序、中序，后序遍历的非递归实现</p>
+</blockquote>
+<h3 id="思路：-3"><a href="#思路：-3" class="headerlink" title="思路："></a>思路：</h3><ol>
+<li>非递归的前序遍历和中序遍历都靠压栈。区别是，一个为先打印父节点，后压栈，另一个是遍历左子树，打印，返回，打印右子树。</li>
+<li>非递归后序遍历有两种思路：一种是通过两个栈，一个收集节点，然后倒出来，交给另一个栈，最后打印。另一种是遍历左子树，右子树，记录遍历过的信息，最后返回。</li>
+</ol>
+<h3 id="code-4"><a href="#code-4" class="headerlink" title="code:"></a>code:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Question5</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> value;</span><br><span class="line">        <span class="keyword">public</span> Node left;</span><br><span class="line">        <span class="keyword">public</span> Node right;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.value = data;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Node head = <span class="keyword">new</span> Node(<span class="number">5</span>);</span><br><span class="line">        head.left = <span class="keyword">new</span> Node(<span class="number">3</span>);</span><br><span class="line">        head.right = <span class="keyword">new</span> Node(<span class="number">8</span>);</span><br><span class="line">        head.left.left = <span class="keyword">new</span> Node(<span class="number">2</span>);</span><br><span class="line">        head.left.right = <span class="keyword">new</span> Node(<span class="number">4</span>);</span><br><span class="line">        head.left.left.left = <span class="keyword">new</span> Node(<span class="number">1</span>);</span><br><span class="line">        head.right.left = <span class="keyword">new</span> Node(<span class="number">7</span>);</span><br><span class="line">        head.right.left.left = <span class="keyword">new</span> Node(<span class="number">6</span>);</span><br><span class="line">        head.right.right = <span class="keyword">new</span> Node(<span class="number">10</span>);</span><br><span class="line">        head.right.right.left = <span class="keyword">new</span> Node(<span class="number">9</span>);</span><br><span class="line">        head.right.right.right = <span class="keyword">new</span> Node(<span class="number">11</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// recursive</span></span><br><span class="line">        System.out.println(<span class="string">"==============recursive=============="</span>);</span><br><span class="line"><span class="comment">//        System.out.print("pre-order: ");</span></span><br><span class="line"><span class="comment">//        preOrderRecur(head);</span></span><br><span class="line"><span class="comment">//        System.out.println();</span></span><br><span class="line"><span class="comment">//        System.out.print("in-order: ");</span></span><br><span class="line"><span class="comment">//        inOrderRecur(head);</span></span><br><span class="line"><span class="comment">//        System.out.println();</span></span><br><span class="line">        System.out.print(<span class="string">"pos-order: "</span>);</span><br><span class="line">        posOrderRecur(head);</span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// unrecursive</span></span><br><span class="line">        System.out.println(<span class="string">"============unrecursive============="</span>);</span><br><span class="line"><span class="comment">//        preOrderUnRecur(head);</span></span><br><span class="line"><span class="comment">//        inOrderUnRecur(head);</span></span><br><span class="line"><span class="comment">//        posOrderUnRecur1(head);</span></span><br><span class="line">        posOrderUnRecur2(head);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//递归前序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrderRecur</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(head.value + <span class="string">" "</span>);</span><br><span class="line">        preOrderRecur(head.left);</span><br><span class="line">        preOrderRecur(head.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//递归中序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">inOrderRecur</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        inOrderRecur(head.left);</span><br><span class="line">        System.out.print(head.value + <span class="string">" "</span>);</span><br><span class="line">        inOrderRecur(head.right);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//递归后序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">posOrderRecur</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (head == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        posOrderRecur(head.left);</span><br><span class="line">        posOrderRecur(head.right);</span><br><span class="line">        System.out.print(head.value + <span class="string">" "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//递归前序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">preOrderUnRecur</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        System.out.print(<span class="string">"pre-order: "</span>);</span><br><span class="line">        <span class="keyword">if</span> (head != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Stack&lt;Node&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">            stack.add(head);</span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">                head = stack.pop();</span><br><span class="line">                System.out.print(head.value + <span class="string">" "</span>);</span><br><span class="line">                <span class="keyword">if</span> (head.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    stack.add(head.right);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (head.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    stack.add(head.left);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//非递归中序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">inOrderUnRecur</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        System.out.print(<span class="string">"in-Order: "</span>);</span><br><span class="line">        <span class="keyword">if</span> (head != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Stack&lt;Node&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty() || head != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (head != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    stack.add(head);</span><br><span class="line">                    head = head.left;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    head = stack.pop();</span><br><span class="line">                    System.out.print(head.value + <span class="string">" "</span>);</span><br><span class="line">                    head = head.right;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//非递归后续遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">posOrderUnRecur1</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        System.out.print(<span class="string">"pos-order: "</span>);</span><br><span class="line">        <span class="keyword">if</span> (head != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Stack&lt;Node&gt; stack1 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">            Stack&lt;Node&gt; stack2 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">            stack1.add(head);</span><br><span class="line">            <span class="keyword">while</span> (!stack1.isEmpty()) &#123;</span><br><span class="line">                head = stack1.pop();</span><br><span class="line">                stack2.add(head);</span><br><span class="line">                <span class="keyword">if</span> (head.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    stack1.add(head.left);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (head.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    stack1.add(head.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (!stack2.isEmpty()) &#123;</span><br><span class="line">                System.out.print(stack2.pop().value + <span class="string">" "</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//非递归后序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">posOrderUnRecur2</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">        System.out.print(<span class="string">"pos-order: "</span>);</span><br><span class="line">        <span class="keyword">if</span> (head != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Stack&lt;Node&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">            stack.add(head);</span><br><span class="line">            Node cur = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty()) &#123;</span><br><span class="line">                cur = stack.peek();</span><br><span class="line">                <span class="keyword">if</span> (cur.left != <span class="keyword">null</span> &amp;&amp; head != cur.left &amp;&amp; head != cur.right) &#123;</span><br><span class="line">                    stack.add(cur.left);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cur.right != <span class="keyword">null</span> &amp;&amp; head != cur.right) &#123;</span><br><span class="line">                    stack.add(cur.right);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    System.out.print(stack.pop().value + <span class="string">" "</span>);</span><br><span class="line">                    head = cur;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题目6："><a href="#题目6：" class="headerlink" title="题目6："></a>题目6：</h2><blockquote>
+<p>在二叉树中找到一个节点的后继节点<br>【题目】<br>现在有一种新的二叉树节点类型如下：<br>public class Node {<br>public int value;<br>public Node left;<br>public Node right;<br>public Node parent;<br>public Node(int data) {<br>this.value = data;<br>}<br>}</p>
+<p>该结构比普通二叉树节点结构多了一个指向父节点的parent指针。假设有一<br>棵Node类型的节点组成的二叉树，树中每个节点的parent指针都正确地指向<br>自己的父节点，头节点的parent指向null。只给一个在二叉树中的某个节点<br>node，请实现返回node的后继节点的函数。在二叉树的中序遍历的序列中，<br>node的下一个节点叫作node的后继节点。</p>
+</blockquote>
+<h3 id="思路：-4"><a href="#思路：-4" class="headerlink" title="思路："></a>思路：</h3><p>分几种情况：</p>
+<ol>
+<li>当前点有右子树时，后继结点为当前节点的右子树的最左端。</li>
+<li>当前点没有右子树时，后继结点为第一个为左子树的父节点，如果没有则为null。</li>
+</ol>
+<h3 id="code-5"><a href="#code-5" class="headerlink" title="code:"></a>code:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Question6</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> value;</span><br><span class="line">        <span class="keyword">public</span> Node left;</span><br><span class="line">        <span class="keyword">public</span> Node right;</span><br><span class="line">        <span class="keyword">public</span> Node parent;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.value = data;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Node head = <span class="keyword">new</span> Node(<span class="number">6</span>);</span><br><span class="line">        head.parent = <span class="keyword">null</span>;</span><br><span class="line">        head.left = <span class="keyword">new</span> Node(<span class="number">3</span>);</span><br><span class="line">        head.left.parent = head;</span><br><span class="line">        head.left.left = <span class="keyword">new</span> Node(<span class="number">1</span>);</span><br><span class="line">        head.left.left.parent = head.left;</span><br><span class="line">        head.left.left.right = <span class="keyword">new</span> Node(<span class="number">2</span>);</span><br><span class="line">        head.left.left.right.parent = head.left.left;</span><br><span class="line">        head.left.right = <span class="keyword">new</span> Node(<span class="number">4</span>);</span><br><span class="line">        head.left.right.parent = head.left;</span><br><span class="line">        head.left.right.right = <span class="keyword">new</span> Node(<span class="number">5</span>);</span><br><span class="line">        head.left.right.right.parent = head.left.right;</span><br><span class="line">        head.right = <span class="keyword">new</span> Node(<span class="number">9</span>);</span><br><span class="line">        head.right.parent = head;</span><br><span class="line">        head.right.left = <span class="keyword">new</span> Node(<span class="number">8</span>);</span><br><span class="line">        head.right.left.parent = head.right;</span><br><span class="line">        head.right.left.left = <span class="keyword">new</span> Node(<span class="number">7</span>);</span><br><span class="line">        head.right.left.left.parent = head.right.left;</span><br><span class="line">        head.right.right = <span class="keyword">new</span> Node(<span class="number">10</span>);</span><br><span class="line">        head.right.right.parent = head.right;</span><br><span class="line"></span><br><span class="line">        Node test = head.left.left;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head.left.left.right;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head.left;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head.left.right;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head.left.right.right;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head.right.left.left;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head.right.left;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head.right;</span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test).value);</span><br><span class="line">        test = head.right.right; <span class="comment">// 10's next is null</span></span><br><span class="line">        System.out.println(test.value + <span class="string">" next: "</span> + getNextNode(test));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Node <span class="title">getNextNode</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Node cur = node.right;</span><br><span class="line">            <span class="keyword">while</span> (cur.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                cur = cur.left;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> cur;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (node.parent == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Node parent = node.parent;</span><br><span class="line">            <span class="keyword">while</span> (parent != <span class="keyword">null</span> &amp;&amp; node != parent.left) &#123;</span><br><span class="line">                node = parent;</span><br><span class="line">                parent = node.parent;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> parent;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="并查集："><a href="#并查集：" class="headerlink" title="并查集："></a>并查集：</h1><h2 id="概念：-1"><a href="#概念：-1" class="headerlink" title="概念："></a>概念：</h2><p>并查集有几个集合组成，每个集合由若干个节点，满足以下几个条件：</p>
+<ol>
+<li>并查集可以快速合并两个节点所在的集合。</li>
+<li>并查集可以快速查询某个节点是否属于某一集合。</li>
+<li>当数据量很大时，并查集时间复杂度可以降到O（1）。</li>
+</ol>
+<p>另外一点比较有趣的是，并查集这个算法史上可以名列前五的算法，发现的很早，但是证明它的时间复杂度证了25年。</p>
+<h2 id="具体实现："><a href="#具体实现：" class="headerlink" title="具体实现："></a>具体实现：</h2><h3 id="code-6"><a href="#code-6" class="headerlink" title="code"></a>code</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UnionFind</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">		<span class="comment">// whatever you like</span></span><br><span class="line">		<span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.value = value;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">union</span> </span>&#123;</span><br><span class="line">		<span class="keyword">public</span> HashMap&lt;Node, Node&gt; fatherMap;</span><br><span class="line">		<span class="keyword">public</span> HashMap&lt;Node, Integer&gt; rankMap;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">union</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			fatherMap = <span class="keyword">new</span> HashMap&lt;Node, Node&gt;();</span><br><span class="line">			rankMap = <span class="keyword">new</span> HashMap&lt;Node, Integer&gt;();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">makeSets</span><span class="params">(List&lt;Node&gt; nodes)</span> </span>&#123;</span><br><span class="line">			fatherMap.clear();</span><br><span class="line">			rankMap.clear();</span><br><span class="line">			<span class="keyword">for</span> (Node node : nodes) &#123;</span><br><span class="line">				fatherMap.put(node, node);</span><br><span class="line">				rankMap.put(node, <span class="number">1</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//关键部分，把其他位置打散，全部直连父节点。</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> Node <span class="title">findFather</span><span class="params">(Node n)</span> </span>&#123;</span><br><span class="line">			Node father = fatherMap.get(n);</span><br><span class="line">		    <span class="keyword">if</span> (father != n) &#123;</span><br><span class="line">				father = findFather(father);</span><br><span class="line">			&#125;</span><br><span class="line">			fatherMap.put(n, father);</span><br><span class="line">			<span class="keyword">return</span> father;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">union</span><span class="params">(Node a, Node b)</span> </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (a == <span class="keyword">null</span> || b == <span class="keyword">null</span>) &#123;</span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			Node aFather = findFather(a);</span><br><span class="line">			Node bFather = findFather(b);</span><br><span class="line">			<span class="keyword">if</span> (aFather != bFather) &#123;</span><br><span class="line">				<span class="keyword">int</span> aFrank = rankMap.get(aFather);</span><br><span class="line">				<span class="keyword">int</span> bFrank = rankMap.get(bFather);</span><br><span class="line">				<span class="keyword">if</span> (aFrank &lt;= bFrank) &#123;</span><br><span class="line">					fatherMap.put(aFather, bFather);</span><br><span class="line">					rankMap.put(bFather, aFrank + bFrank);</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					fatherMap.put(bFather, aFather);</span><br><span class="line">					rankMap.put(aFather, aFrank + bFrank);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Node[] nodes = <span class="keyword">new</span> Node[<span class="number">10</span>];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nodes.length; i++) &#123;</span><br><span class="line">			nodes[i] = <span class="keyword">new</span> Node(i + <span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		List&lt;Node&gt; lists = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">		lists.addAll(Arrays.asList(nodes));</span><br><span class="line">		DisjointSets unionFind = <span class="keyword">new</span> DisjointSets();</span><br><span class="line">		unionFind.makeSets(lists);</span><br><span class="line">		unionFind.union(nodes[<span class="number">2</span>], nodes[<span class="number">3</span>]);</span><br><span class="line">		unionFind.union(nodes[<span class="number">5</span>], nodes[<span class="number">6</span>]);</span><br><span class="line">		unionFind.union(nodes[<span class="number">6</span>], nodes[<span class="number">7</span>]);</span><br><span class="line">		unionFind.union(nodes[<span class="number">2</span>], nodes[<span class="number">7</span>]);</span><br><span class="line">		System.out.println(unionFind.findFather(nodes[<span class="number">2</span>]).value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题目8："><a href="#题目8：" class="headerlink" title="题目8："></a>题目8：</h2><blockquote>
+<p>在数组中找到一个局部最小的位置<br>【题目】<br>定义局部最小的概念。arr长度为1时，arr[0]是局部最小。arr的长度为<br>N(N&gt;1)时，如果arr[0]&lt;arr[1]，那么arr[0]是局部最小；如果arr[N-<br>1]&lt;arr[N-2]，那么arr[N-1]是局部最小；如果0&lt;i&lt;N-1，既有<br>arr[i]&lt;arr[i-1]，又有arr[i]&lt;arr[i+1]，那么arr[i]是局部最小。<br>给定无序数组arr，已知arr中任意两个相邻的数都不相等。写一个函数，<br>只需返回arr中任意一个局部最小出现的位置即可。</p>
+</blockquote>
+<h3 id="思路：-5"><a href="#思路：-5" class="headerlink" title="思路："></a>思路：</h3><p>简单的二分查找</p>
+<h3 id="code-7"><a href="#code-7" class="headerlink" title="code:"></a>code:</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getLessIndex</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (arr == <span class="keyword">null</span> || arr.length == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// no exist</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (arr.length == <span class="number">1</span> || arr[<span class="number">0</span>] &lt; arr[<span class="number">1</span>]) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (arr[arr.length - <span class="number">1</span>] &lt; arr[arr.length - <span class="number">2</span>]) &#123;</span><br><span class="line">		<span class="keyword">return</span> arr.length - <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> left = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> right = arr.length - <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> mid = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">		mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span> (arr[mid] &gt; arr[mid - <span class="number">1</span>]) &#123;</span><br><span class="line">			right = mid - <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (arr[mid] &gt; arr[mid + <span class="number">1</span>]) &#123;</span><br><span class="line">			left = mid + <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> mid;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+          
+            <a href="/tags/程序人生/" rel="tag"><i class="fa fa-tag"></i> 程序人生</a>
+          
+            <a href="/tags/优先队列/" rel="tag"><i class="fa fa-tag"></i> 优先队列</a>
+          
+            <a href="/tags/哈夫曼编码/" rel="tag"><i class="fa fa-tag"></i> 哈夫曼编码</a>
+          
+            <a href="/tags/二叉树/" rel="tag"><i class="fa fa-tag"></i> 二叉树</a>
+          
+            <a href="/tags/并查集/" rel="tag"><i class="fa fa-tag"></i> 并查集</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/06/链表，布隆过滤器/" rel="next" title="链表，布隆过滤器">
+                <i class="fa fa-chevron-left"></i> 链表，布隆过滤器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="chen" />
+            
+              <p class="site-author-name" itemprop="name">chen</p>
+              <p class="site-description motion-element" itemprop="description">我希望自己也是一颗星星：如果我会发光，就不必害怕黑暗。如果我自己是那么美好，那么一切恐惧就可以烟消云散。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#优先队列（贪心算法）"><span class="nav-number">1.</span> <span class="nav-text">优先队列（贪心算法）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目1"><span class="nav-number">1.2.</span> <span class="nav-text">题目1:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路："><span class="nav-number">1.2.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code"><span class="nav-number">1.2.2.</span> <span class="nav-text">code:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哈夫曼树："><span class="nav-number">2.</span> <span class="nav-text">哈夫曼树：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念："><span class="nav-number">2.1.</span> <span class="nav-text">概念：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目2："><span class="nav-number">2.2.</span> <span class="nav-text">题目2：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">code:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目3："><span class="nav-number">2.3.</span> <span class="nav-text">题目3：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路：-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">code:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二叉树"><span class="nav-number">3.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目4："><span class="nav-number">3.1.</span> <span class="nav-text">题目4：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路：-2"><span class="nav-number">3.1.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-3"><span class="nav-number">3.1.2.</span> <span class="nav-text">code:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目5："><span class="nav-number">3.2.</span> <span class="nav-text">题目5：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路：-3"><span class="nav-number">3.2.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-4"><span class="nav-number">3.2.2.</span> <span class="nav-text">code:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目6："><span class="nav-number">3.3.</span> <span class="nav-text">题目6：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路：-4"><span class="nav-number">3.3.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-5"><span class="nav-number">3.3.2.</span> <span class="nav-text">code:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并查集："><span class="nav-number">4.</span> <span class="nav-text">并查集：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念：-1"><span class="nav-number">4.1.</span> <span class="nav-text">概念：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现："><span class="nav-number">4.2.</span> <span class="nav-text">具体实现：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code-6"><span class="nav-number">4.2.1.</span> <span class="nav-text">code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目8："><span class="nav-number">4.3.</span> <span class="nav-text">题目8：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路：-5"><span class="nav-number">4.3.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-7"><span class="nav-number">4.3.2.</span> <span class="nav-text">code:</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'CmFSUComfdazesQuejzJEJwO-gzGzoHsz',
+        appKey: 'WoYQuAoM6ngk7wODVISP0H31',
+        placeholder: '请在这里评论',
+        avatar:'retro',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottom";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
