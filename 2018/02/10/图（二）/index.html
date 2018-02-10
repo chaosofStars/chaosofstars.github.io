@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法,程序人生,图," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Topology Sort（拓扑排序）概念拓扑排序常用于解决依赖问题，像软件包之间的依赖。所以有以下两个前提：  用于有向图 必须无环  具体思路就是先找到in为0的节点，即没有指向它的路径的节点。然后记下他们，删掉他们通向其他节点的路径。记下删掉后in为0的节点，依次重复，直到遍历过所有节点。 Code12345678910111213141516171819202122public stati">
+<meta name="keywords" content="算法,程序人生,图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图（二）">
+<meta property="og:url" content="http://yoursite.com/2018/02/10/图（二）/index.html">
+<meta property="og:site_name" content="Stay Foolish">
+<meta property="og:description" content="Topology Sort（拓扑排序）概念拓扑排序常用于解决依赖问题，像软件包之间的依赖。所以有以下两个前提：  用于有向图 必须无环  具体思路就是先找到in为0的节点，即没有指向它的路径的节点。然后记下他们，删掉他们通向其他节点的路径。记下删掉后in为0的节点，依次重复，直到遍历过所有节点。 Code12345678910111213141516171819202122public stati">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-10T13:15:01.605Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图（二）">
+<meta name="twitter:description" content="Topology Sort（拓扑排序）概念拓扑排序常用于解决依赖问题，像软件包之间的依赖。所以有以下两个前提：  用于有向图 必须无环  具体思路就是先找到in为0的节点，即没有指向它的路径的节点。然后记下他们，删掉他们通向其他节点的路径。记下删掉后in为0的节点，依次重复，直到遍历过所有节点。 Code12345678910111213141516171819202122public stati">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":null,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/10/图（二）/"/>
+
+
+
+
+
+  <title>图（二） | Stay Foolish</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Stay Foolish</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Java learner</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            时间轴
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/10/图（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Stay Foolish">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-10T20:31:45+08:00">
+                2018-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/10/图（二）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/02/10/图（二）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Topology-Sort（拓扑排序）"><a href="#Topology-Sort（拓扑排序）" class="headerlink" title="Topology Sort（拓扑排序）"></a>Topology Sort（拓扑排序）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>拓扑排序常用于解决依赖问题，像软件包之间的依赖。所以有以下两个前提：</p>
+<ol>
+<li>用于有向图</li>
+<li>必须无环</li>
+</ol>
+<p>具体思路就是先找到in为0的节点，即没有指向它的路径的节点。然后记下他们，删掉他们通向其他节点的路径。记下删掉后in为0的节点，依次重复，直到遍历过所有节点。</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Node&gt; <span class="title">sortedTopology</span><span class="params">(Graph graph)</span> </span>&#123;</span><br><span class="line">      HashMap&lt;Node, Integer&gt; nodeInMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">      Queue&lt;Node&gt; zeroInQueue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">      <span class="keyword">for</span> (Node node : graph.nodes.values()) &#123;</span><br><span class="line">          nodeInMap.put(node, node.in);</span><br><span class="line">          <span class="keyword">if</span> (node.in == <span class="number">0</span>) &#123;</span><br><span class="line">              zeroInQueue.add(node);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      List&lt;Node&gt; res = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">      <span class="keyword">while</span> (!zeroInQueue.isEmpty()) &#123;</span><br><span class="line">          Node node = zeroInQueue.poll();</span><br><span class="line">          res.add(node);</span><br><span class="line">          <span class="keyword">for</span> (Node next : node.nexts) &#123;</span><br><span class="line">              nodeInMap.put(next, nodeInMap.get(next) - <span class="number">1</span>);</span><br><span class="line">              <span class="keyword">if</span> (nodeInMap.get(next) == <span class="number">0</span>) &#123;</span><br><span class="line">                  zeroInQueue.add(next);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="最小生成树算法"><a href="#最小生成树算法" class="headerlink" title="最小生成树算法"></a>最小生成树算法</h1><h2 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h2><p>最小生成树算法用于找到把所有节点连起来权重最小的路径。具体思路有从点找和从边找两种。</p>
+<h2 id="Kruskal算法"><a href="#Kruskal算法" class="headerlink" title="Kruskal算法"></a>Kruskal算法</h2><p>k算法用于从边找。把所有边加入一个优先队列，依次从优先队列中取出权重最小的边，判断它两端的点是否属于连通，如果没有就把它记下，然后把两边连通。最后记下的所有边就是结果。</p>
+<p>这里连通性的检测需要用到并查集。</p>
+<h3 id="Code-1"><a href="#Code-1" class="headerlink" title="Code"></a>Code</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Method_Kruskal</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UnionFind</span> </span>&#123;</span><br><span class="line">        HashMap&lt;Node, Node&gt; fatherMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        HashMap&lt;Node, Integer&gt; rankMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">UnionFind</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            fatherMap = <span class="keyword">new</span> HashMap&lt;Node, Node&gt;();</span><br><span class="line">            rankMap = <span class="keyword">new</span> HashMap&lt;Node, Integer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">makeSets</span><span class="params">(Collection&lt;Node&gt; nodes)</span> </span>&#123;</span><br><span class="line">            fatherMap.clear();</span><br><span class="line">            rankMap.clear();</span><br><span class="line">            <span class="keyword">for</span> (Node node : nodes) &#123;</span><br><span class="line">                fatherMap.put(node, node);</span><br><span class="line">                rankMap.put(node, <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Node <span class="title">findFather</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">            Node father = fatherMap.get(node);</span><br><span class="line">            <span class="keyword">if</span> (father != <span class="keyword">null</span>) &#123;</span><br><span class="line">                father = findFather(father);</span><br><span class="line">            &#125;</span><br><span class="line">            fatherMap.put(node, father);</span><br><span class="line">            <span class="keyword">return</span> father;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSameSet</span><span class="params">(Node node1, Node node2)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> findFather(node1) == findFather(node2);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">union</span><span class="params">(Node node1, Node node2)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (node1 == <span class="keyword">null</span> || node2 == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            Node father1 = findFather(node1);</span><br><span class="line">            Node father2 = findFather(node2);</span><br><span class="line">            <span class="keyword">if</span> (father1 != father2) &#123;</span><br><span class="line">                <span class="keyword">int</span> size1 = rankMap.get(father1);</span><br><span class="line">                <span class="keyword">int</span> size2 = rankMap.get(father2);</span><br><span class="line">                <span class="keyword">if</span> (size1 &gt;= size2) &#123;</span><br><span class="line">                    fatherMap.put(father2, father1);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    fatherMap.put(father1, father2);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Set&lt;Edge&gt; <span class="title">Kruskal</span><span class="params">(Graph graph)</span> </span>&#123;</span><br><span class="line">        UnionFind unionFind = <span class="keyword">new</span> UnionFind();</span><br><span class="line">        unionFind.makeSets(graph.nodes.values());</span><br><span class="line">        PriorityQueue&lt;Edge&gt; priorityQueue = <span class="keyword">new</span> PriorityQueue&lt;&gt;(Comparator.comparingInt(o -&gt; o.weight));</span><br><span class="line">        <span class="keyword">for</span> (Edge edge : graph.edges) &#123;</span><br><span class="line">            priorityQueue.add(edge);</span><br><span class="line">        &#125;</span><br><span class="line">        Set&lt;Edge&gt; result = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">while</span> (!priorityQueue.isEmpty()) &#123;</span><br><span class="line">            Edge edge = priorityQueue.poll();</span><br><span class="line">            <span class="keyword">if</span> (!unionFind.isSameSet(edge.from, edge.to)) &#123;</span><br><span class="line">                result.add(edge);</span><br><span class="line">                unionFind.union(edge.from, edge.to);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h2><p>prim算法从点开始，把该点的所有边加入到优先队列中。优先队列中弹出权重最小的边，连通两边的点。把连通点的所有边也加入到优先队列中。循环这个过程，直到全部点连通。</p>
+<h3 id="Code-2"><a href="#Code-2" class="headerlink" title="Code"></a>Code</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Set&lt;Edge&gt; <span class="title">Prim</span><span class="params">(Graph graph)</span> </span>&#123;</span><br><span class="line">     PriorityQueue&lt;Edge&gt; priorityQueue = <span class="keyword">new</span> PriorityQueue&lt;&gt;(Comparator.comparingInt(o -&gt; o.weight));</span><br><span class="line">     Set&lt;Node&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">     Set&lt;Edge&gt; res = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">     <span class="keyword">for</span> (Node node : graph.nodes.values()) &#123;</span><br><span class="line">         <span class="keyword">if</span> (!set.contains(node)) &#123;</span><br><span class="line">             set.add(node);</span><br><span class="line">             <span class="keyword">for</span> (Edge edge : node.edges) &#123;</span><br><span class="line">                 priorityQueue.add(edge);</span><br><span class="line">             &#125;</span><br><span class="line">             <span class="keyword">while</span> (!priorityQueue.isEmpty()) &#123;</span><br><span class="line">                 Edge edge = priorityQueue.poll();</span><br><span class="line">                 Node to = edge.to;</span><br><span class="line">                 <span class="keyword">if</span> (!set.contains(to)) &#123;</span><br><span class="line">                     res.add(edge);</span><br><span class="line">                     set.add(to);</span><br><span class="line">                     <span class="keyword">for</span> (Edge edge1 : to.edges) &#123;</span><br><span class="line">                         priorityQueue.add(edge1);</span><br><span class="line">                     &#125;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> res;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h1><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zh.wikipedia.org/wiki/%E6%88%B4%E5%85%8B%E6%96%AF%E7%89%B9%E6%8B%89%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Dijkstra-维基百科</a></p>
+<p><a href="https://www.youtube.com/watch?v=gdmfOwyQlcI" target="_blank" rel="noopener">Dijkstra’s Algorithm</a></p>
+<p><a href="http://wiki.jikexueyuan.com/project/easy-learn-algorithm/dijkstra.html" target="_blank" rel="noopener">Dijkstra-极客学院</a></p>
+<h2 id="Code-3"><a href="#Code-3" class="headerlink" title="Code"></a>Code</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HashMap&lt;Node, Integer&gt; <span class="title">dijkstra1</span><span class="params">(Node head)</span> </span>&#123;</span><br><span class="line">	HashMap&lt;Node, Integer&gt; distanceMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	distanceMap.put(head, <span class="number">0</span>);</span><br><span class="line">	HashSet&lt;Node&gt; selectedNodes = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">	Node minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);</span><br><span class="line">	<span class="keyword">while</span> (minNode != <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">int</span> distance = distanceMap.get(minNode);</span><br><span class="line">		<span class="keyword">for</span> (Edge edge : minNode.edges) &#123;</span><br><span class="line">			Node toNode = edge.to;</span><br><span class="line">			<span class="keyword">if</span> (!distanceMap.containsKey(toNode)) &#123;</span><br><span class="line">				distanceMap.put(toNode, distance + edge.weight);</span><br><span class="line">			&#125;</span><br><span class="line">			distanceMap.put(edge.to, Math.min(distanceMap.get(toNode), distance + edge.weight));</span><br><span class="line">		&#125;</span><br><span class="line">		selectedNodes.add(minNode);</span><br><span class="line">		minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> distanceMap;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Node <span class="title">getMinDistanceAndUnselectedNode</span><span class="params">(HashMap&lt;Node, Integer&gt; distanceMap, HashSet&lt;Node&gt; touchedNodes)</span> </span>&#123;</span><br><span class="line">	Node minNode = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">int</span> minDistance = Integer.MAX_VALUE;</span><br><span class="line">	<span class="keyword">for</span> (Entry&lt;Node, Integer&gt; entry : distanceMap.entrySet()) &#123;</span><br><span class="line">		Node node = entry.getKey();</span><br><span class="line">		<span class="keyword">int</span> distance = entry.getValue();</span><br><span class="line">		<span class="keyword">if</span> (!touchedNodes.contains(node) &amp;&amp; distance &lt; minDistance) &#123;</span><br><span class="line">			minNode = node;</span><br><span class="line">			minDistance = distance;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> minNode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">NodeRecord</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> Node node;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span> distance;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">NodeRecord</span><span class="params">(Node node, <span class="keyword">int</span> distance)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.node = node;</span><br><span class="line">		<span class="keyword">this</span>.distance = distance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">NodeHeap</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Node[] nodes;</span><br><span class="line">	<span class="keyword">private</span> HashMap&lt;Node, Integer&gt; heapIndexMap;</span><br><span class="line">	<span class="keyword">private</span> HashMap&lt;Node, Integer&gt; distanceMap;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">NodeHeap</span><span class="params">(<span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">		nodes = <span class="keyword">new</span> Node[size];</span><br><span class="line">		heapIndexMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">		distanceMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">		<span class="keyword">this</span>.size = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> size == <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addOrUpdateOrIgnore</span><span class="params">(Node node, <span class="keyword">int</span> distance)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (inHeap(node)) &#123;</span><br><span class="line">			distanceMap.put(node, Math.min(distanceMap.get(node), distance));</span><br><span class="line">			insertHeapify(node, heapIndexMap.get(node));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!isEntered(node)) &#123;</span><br><span class="line">			nodes[size] = node;</span><br><span class="line">			heapIndexMap.put(node, size);</span><br><span class="line">			distanceMap.put(node, distance);</span><br><span class="line">			insertHeapify(node, size++);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> NodeRecord <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		NodeRecord nodeRecord = <span class="keyword">new</span> NodeRecord(nodes[<span class="number">0</span>], distanceMap.get(nodes[<span class="number">0</span>]));</span><br><span class="line">		swap(<span class="number">0</span>, size - <span class="number">1</span>);</span><br><span class="line">		heapIndexMap.put(nodes[size - <span class="number">1</span>], -<span class="number">1</span>);</span><br><span class="line">		distanceMap.remove(nodes[size - <span class="number">1</span>]);</span><br><span class="line">		nodes[size - <span class="number">1</span>] = <span class="keyword">null</span>;</span><br><span class="line">		heapify(<span class="number">0</span>, --size);</span><br><span class="line">		<span class="keyword">return</span> nodeRecord;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insertHeapify</span><span class="params">(Node node, <span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">while</span> (distanceMap.get(nodes[index]) &lt; distanceMap.get(nodes[(index - <span class="number">1</span>) / <span class="number">2</span>])) &#123;</span><br><span class="line">			swap(index, (index - <span class="number">1</span>) / <span class="number">2</span>);</span><br><span class="line">			index = (index - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> left = index * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span> (left &lt; size) &#123;</span><br><span class="line">			<span class="keyword">int</span> smallest = left + <span class="number">1</span> &lt; size &amp;&amp; distanceMap.get(nodes[left + <span class="number">1</span>]) &lt; distanceMap.get(nodes[left])</span><br><span class="line">					? left + <span class="number">1</span> : left;</span><br><span class="line">			smallest = distanceMap.get(nodes[smallest]) &lt; distanceMap.get(nodes[index]) ? smallest : index;</span><br><span class="line">			<span class="keyword">if</span> (smallest == index) &#123;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			swap(smallest, index);</span><br><span class="line">			index = smallest;</span><br><span class="line">			left = index * <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isEntered</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> heapIndexMap.containsKey(node);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">inHeap</span><span class="params">(Node node)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> isEntered(node) &amp;&amp; heapIndexMap.get(node) != -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> index1, <span class="keyword">int</span> index2)</span> </span>&#123;</span><br><span class="line">		heapIndexMap.put(nodes[index1], index2);</span><br><span class="line">		heapIndexMap.put(nodes[index2], index1);</span><br><span class="line">		Node tmp = nodes[index1];</span><br><span class="line">		nodes[index1] = nodes[index2];</span><br><span class="line">		nodes[index2] = tmp;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HashMap&lt;Node, Integer&gt; <span class="title">dijkstra2</span><span class="params">(Node head, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">	NodeHeap nodeHeap = <span class="keyword">new</span> NodeHeap(size);</span><br><span class="line">	nodeHeap.addOrUpdateOrIgnore(head, <span class="number">0</span>);</span><br><span class="line">	HashMap&lt;Node, Integer&gt; result = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">	<span class="keyword">while</span> (!nodeHeap.isEmpty()) &#123;</span><br><span class="line">		NodeRecord record = nodeHeap.pop();</span><br><span class="line">		Node cur = record.node;</span><br><span class="line">		<span class="keyword">int</span> distance = record.distance;</span><br><span class="line">		<span class="keyword">for</span> (Edge edge : cur.edges) &#123;</span><br><span class="line">			nodeHeap.addOrUpdateOrIgnore(edge.to, edge.weight + distance);</span><br><span class="line">		&#125;</span><br><span class="line">		result.put(cur, distance);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+          
+            <a href="/tags/程序人生/" rel="tag"><i class="fa fa-tag"></i> 程序人生</a>
+          
+            <a href="/tags/图/" rel="tag"><i class="fa fa-tag"></i> 图</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/09/图（一）/" rel="next" title="图（一）">
+                <i class="fa fa-chevron-left"></i> 图（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="chen" />
+            
+              <p class="site-author-name" itemprop="name">chen</p>
+              <p class="site-description motion-element" itemprop="description">我希望自己也是一颗星星：如果我会发光，就不必害怕黑暗。如果我自己是那么美好，那么一切恐惧就可以烟消云散。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Topology-Sort（拓扑排序）"><span class="nav-number">1.</span> <span class="nav-text">Topology Sort（拓扑排序）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code"><span class="nav-number">1.2.</span> <span class="nav-text">Code</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最小生成树算法"><span class="nav-number">2.</span> <span class="nav-text">最小生成树算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念-1"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kruskal算法"><span class="nav-number">2.2.</span> <span class="nav-text">Kruskal算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">Code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prim算法"><span class="nav-number">2.3.</span> <span class="nav-text">Prim算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Code-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">Code</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dijkstra算法"><span class="nav-number">3.</span> <span class="nav-text">Dijkstra算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.1.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-3"><span class="nav-number">3.2.</span> <span class="nav-text">Code</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">chen</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'CmFSUComfdazesQuejzJEJwO-gzGzoHsz',
+        appKey: 'WoYQuAoM6ngk7wODVISP0H31',
+        placeholder: '请在这里评论',
+        avatar:'retro',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottom";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
