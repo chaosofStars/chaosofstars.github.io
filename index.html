@@ -356,15 +356,13 @@
 
       
         
-          
-          Topology Sort（拓扑排序）概念拓扑排序常用于解决依赖问题，像软件包之间的依赖。所以有以下两个前提：
-
-用于有向图
-必须无环
-
-具体思路就是先找到in为0的节点，即没有指向它的路径的节点。然后记下他们，删掉他们通向其他节点的路径。记下删掉后in为0的节点，依次重复，直到遍历过所有节点。
-C
-          ...
+          <h1 id="Topology-Sort（拓扑排序）"><a href="#Topology-Sort（拓扑排序）" class="headerlink" title="Topology Sort（拓扑排序）"></a>Topology Sort（拓扑排序）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>拓扑排序常用于解决依赖问题，像软件包之间的依赖。所以有以下两个前提：</p>
+<ol>
+<li>用于有向图</li>
+<li>必须无环</li>
+</ol>
+<p>具体思路就是先找到in为0的节点，即没有指向它的路径的节点。然后记下他们，删掉他们通向其他节点的路径。记下删掉后in为0的节点，依次重复，直到遍历过所有节点。</p>
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/02/10/图（二）/#more" rel="contents">
@@ -520,18 +518,10 @@ C
 
       
         
-          
-          图（一）概念
-图可以简单的认为是二叉树的一种更普遍的情况。在实际生产上更常见，所以是数据结构中很重要的一部分。
-但是因为图的代码比较多，面试中考的倒是比较少。
-图可以分为无向图和有向图，有向图的边多了一个from和to属性。
-表达方式有两种方式：
-
-邻接矩阵:
-邻接表：
-
-我个人还是比较喜欢邻接表的
-          ...
+          <h1 id="图（一）"><a href="#图（一）" class="headerlink" title="图（一）"></a>图（一）</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p><img src="http://img.blog.csdn.net/20170818171237070?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzk2MzA1ODc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="邻接矩阵关系图"></p>
+<p>图可以简单的认为是二叉树的一种更普遍的情况。在实际生产上更常见，所以是数据结构中很重要的一部分。</p>
+<p>但是因为图的代码比较多，面试中考的倒是比较少。</p>
+<p>图可以分为无向图和有向图，有向图的边多了一个from和to属性。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/02/09/图（一）/#more" rel="contents">
@@ -1934,7 +1924,7 @@ path为经过该点的值，end为在该点结束的值（用于search过程）�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
